@@ -1,0 +1,49 @@
+---
+alwaysApply: false
+filePatterns:
+  - "*.md"
+  - "*.mdc"
+---
+
+# Markdown Lint Rules
+
+## Markdownlint Workflow
+
+When updating or creating Markdown files, you MUST:
+
+1. **Run markdownlint** on the modified file(s) after making changes
+2. **Fix all linting issues** until there are no warnings or errors
+3. **Verify** that the file passes all markdownlint checks before
+   considering the task complete
+
+### Workflow Steps
+
+1. After editing a Markdown file, run:
+
+   ```bash
+   npx markdownlint-cli <file-path>
+   ```
+
+   Or for all Markdown files:
+
+   ```bash
+   npx markdownlint-cli "**/*.md" "**/*.mdc"
+   ```
+
+2. Review all reported issues and fix them:
+   - Fix formatting issues (line length, spacing, etc.)
+   - Correct heading hierarchy
+   - Fix list formatting
+   - Resolve any other markdownlint rule violations
+
+3. Re-run markdownlint to verify all issues are resolved
+
+4. Only proceed with the task when markdownlint reports zero errors or warnings
+
+### Rules
+
+- **Never skip linting** - Always run markdownlint after Markdown file
+  changes
+- **Fix all issues** - Do not leave any warnings or errors unresolved
+- **Verify before completion** - Confirm clean lint results before finishing
+  the task
