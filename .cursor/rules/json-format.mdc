@@ -1,0 +1,69 @@
+---
+alwaysApply: false
+filePatterns:
+  - "*.json"
+---
+
+# JSON Format Rules
+
+## JSON Formatting Workflow
+
+When updating or creating JSON files, you MUST:
+
+1. **Format JSON** using `jq` after making changes
+2. **Validate JSON syntax** to ensure it's valid
+3. **Fix all formatting issues** until there are no warnings or errors
+4. **Verify** that the file is properly formatted and valid before
+   considering the task complete
+
+### Workflow Steps
+
+1. After editing a JSON file, format it:
+
+   ```bash
+   jq . <file-path> > <file-path>.tmp && mv <file-path>.tmp <file-path>
+   ```
+
+   Or using a temporary file:
+
+   ```bash
+   jq . <file-path> > /tmp/formatted.json && mv /tmp/formatted.json <file-path>
+   ```
+
+2. Validate JSON syntax:
+
+   ```bash
+   jq . <file-path> > /dev/null
+   ```
+
+   If this command fails, the JSON is invalid and must be fixed.
+
+3. Review the formatted file and ensure:
+   - Proper indentation (2 spaces by default)
+   - Consistent formatting
+   - No trailing commas
+   - Valid JSON syntax
+
+4. Re-run formatting and validation to verify all issues are resolved
+
+5. Only proceed with the task when JSON is properly formatted and valid
+
+### Rules
+
+- **Never skip formatting** - Always format JSON files after making changes
+- **Fix all issues** - Do not leave any formatting or syntax errors
+- **Verify before completion** - Confirm the JSON is valid and properly
+  formatted before finishing the task
+- **Use jq for formatting** - Use `jq .` to format JSON files consistently
+
+### Example
+
+```bash
+# Format a JSON file
+jq . scripts/github/repository-settings.json > /tmp/formatted.json && \
+  mv /tmp/formatted.json scripts/github/repository-settings.json
+
+# Validate JSON syntax
+jq . scripts/github/repository-settings.json > /dev/null && \
+  echo "JSON is valid" || echo "JSON is invalid"
+```

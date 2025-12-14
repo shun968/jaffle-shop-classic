@@ -1,0 +1,159 @@
+---
+alwaysApply: true
+---
+
+# Git Workflow Rules
+
+## Branch Strategy
+
+### Base Branch for Feature Branches
+
+- **Feature branches** MUST be created from `main` branch (or `master` if
+  `main` doesn't exist)
+- **Hotfix branches** MUST be created from `main` branch
+- **Release branches** MUST be created from `main` branch
+
+### Branch Naming Convention
+
+| Branch Type | Naming Pattern | Purpose | Base Branch |
+|------------|----------------|---------|-------------|
+| Feature | `feature/<issue>-<desc>` or `feature/<desc>` | Features | `main` |
+| Bugfix | `bugfix/<issue>-<desc>` or `bugfix/<desc>` | Bug fixes | `main` |
+| Hotfix | `hotfix/<issue>-<desc>` or `hotfix/<desc>` | Critical fixes | `main` |
+| Release | `release/<version>` | Release prep | `main` |
+| Development | `develop` or `dev` | Integration | N/A |
+
+#### Branch Examples
+
+**Feature branches:**
+
+- `feature/123-add-user-authentication`
+- `feature/add-user-authentication`
+- `feature/456-implement-payment-api`
+
+**Bugfix branches:**
+
+- `bugfix/789-fix-login-error`
+- `bugfix/fix-login-error`
+
+**Hotfix branches:**
+
+- `hotfix/101-critical-security-patch`
+- `hotfix/critical-security-patch`
+
+**Release branches:**
+
+- `release/1.0.0`
+- `release/2.1.0`
+
+**Development branches:**
+
+- `develop`
+- `dev`
+
+### Branch Naming Rules
+
+1. Use lowercase letters and hyphens only
+2. Do not use underscores or spaces
+3. Keep branch names descriptive but concise
+4. Include issue numbers when available
+5. Use kebab-case (lowercase with hyphens)
+
+## Tag Naming Convention
+
+Tags MUST follow [Semantic Versioning](https://semver.org/) format.
+
+| Tag Type | Naming Pattern | Purpose | Example |
+|----------|----------------|---------|---------|
+| Release | `v<M>.<m>.<p>` | Production release | `v1.0.0` |
+| Alpha | `v<M>.<m>.<p>-alpha.<n>` | Early dev (internal) | `v1.0.0-alpha.1` |
+| Beta | `v<M>.<m>.<p>-beta.<n>` | Beta (external) | `v1.0.0-beta.1` |
+| RC | `v<M>.<m>.<p>-rc.<n>` | Release Candidate | `v1.0.0-rc.1` |
+| Dev | `v<M>.<m>.<p>-dev.<n>` | Development | `v1.0.0-dev.1` |
+| Snapshot | `v<M>.<m>.<p>-snapshot` | Dev snapshot | `v1.0.0-snapshot` |
+
+### Tag Examples
+
+**Release tags:**
+
+- `v1.0.0` - Initial release
+- `v1.1.0` - New features, backward compatible
+- `v1.1.1` - Bug fixes, backward compatible
+- `v2.0.0` - Breaking changes
+
+**Pre-release tags:**
+
+- `v1.0.0-alpha.1` - First alpha release
+- `v1.0.0-beta.1` - First beta release
+- `v1.0.0-rc.1` - First release candidate
+- `v1.0.0-rc.2` - Second release candidate
+- `v1.0.0-dev.1` - Development version
+- `v1.0.0-snapshot` - Development snapshot
+
+### Tag Naming Rules
+
+1. Always prefix with `v` (lowercase)
+2. Follow semantic versioning (MAJOR.MINOR.PATCH)
+3. Use hyphens for pre-release identifiers
+4. Do not use spaces or special characters
+5. Tags are immutable - never modify or delete tags
+
+## General Git Rules
+
+### Commit Rules
+
+> **Note:** For detailed commit message format and conventions, see
+> `.cursor/rules/git-commit.mdc` which covers Conventional Commits
+> specification, commit types, examples, and formatting rules.
+
+1. **One logical change per commit** - Each commit should represent a
+   single, complete change
+2. **Write clear commit messages** - Follow Conventional Commits format
+   (see `.cursor/rules/git-commit.mdc` for details)
+3. **Keep commits focused** - Avoid mixing unrelated changes in one commit
+4. **Test before committing** - Ensure code compiles and tests pass
+
+### Branch Management
+
+1. **Delete merged branches** - Remove feature branches after merging
+2. **Keep branches up to date** - Regularly rebase or merge from base
+   branch
+3. **Avoid force push to shared branches** - Never force push to `main`,
+   `develop`, or release branches
+4. **Use pull requests** - All changes to main branches must go through
+   pull requests
+
+### Pull Request Rules
+
+1. **One feature per PR** - Keep pull requests focused on a single
+   feature or fix
+2. **Link to issues** - Reference related issues in PR description
+3. **Request reviews** - Get at least one approval before merging
+4. **Ensure CI passes** - All CI checks must pass before merging
+5. **Keep PRs small** - Prefer multiple small PRs over one large PR
+
+### Workflow Best Practices
+
+1. **Pull before push** - Always pull latest changes before pushing
+2. **Resolve conflicts early** - Address merge conflicts as soon as
+   possible
+3. **Use meaningful branch names** - Branch names should clearly
+   indicate their purpose
+4. **Regular commits** - Commit frequently with clear messages
+5. **Review your changes** - Review `git diff` before committing
+
+### Protected Branches
+
+The following branches are typically protected:
+
+- `main` / `master` - Production-ready code
+- `develop` - Integration branch for features
+- `release/*` - Release preparation branches
+
+**Rules for protected branches:**
+
+- No direct pushes allowed
+- All changes must go through pull requests
+- Require code review approval
+- Require passing CI checks
+- No force push allowed
