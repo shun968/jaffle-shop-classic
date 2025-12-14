@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:14
+    # To change PostgreSQL version, uncomment and modify:
+    # image: postgres:15
+    # image: postgres:16
+    
+    container_name: postgres-jaffle
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: jaffle_shop
+      PGDATA: /var/lib/postgresql/data/pgdata
+      # To add custom environment variables, uncomment and add:
+      # POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    
+    ports:
+      - "5432:5432"
+      # To change port mapping, modify the port number:
+      # - "5433:5432"
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # To add custom volumes (e.g., init scripts), uncomment and add:
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d jaffle_shop"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
